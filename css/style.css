@@ -1,0 +1,247 @@
+/* Duck Dash - interface styling. Black + clay, after claude.ai's dark theme.
+   The world is painted on the canvas; everything here is chrome on top of it. */
+
+:root {
+  --ink:      #14130f;
+  --ink-2:    #1f1e1b;
+  --ink-3:    #2b2925;
+  --line:     #3a3733;
+  --clay:     #d97757;
+  --clay-hot: #e8977a;
+  --cream:    #f0eee6;
+  --muted:    #a19b90;
+  --dim:      #6b665e;
+  --danger:   #e5484d;
+  --gold:     #e3b341;
+  --silver:   #c2c8cc;
+  --bronze:   #c98a5e;
+  --radius:   18px;
+  /* the portrait play column, set from game.js layout() */
+  --game-w:   100vw;
+  --game-left: 0px;
+  --pad:      max(20px, env(safe-area-inset-left));
+  --top:      max(18px, env(safe-area-inset-top));
+  --bottom:   max(18px, env(safe-area-inset-bottom));
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--sans);
+  overscroll-behavior: none;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#stage { position: fixed; top: 0; left: 0; display: block; }
+
+.hidden { display: none !important; }
+.grow { flex: 1 1 auto; }
+.center { display: flex; justify-content: center; }
+.muted { color: var(--muted); font-size: 15px; }
+.gold  { color: var(--gold);  font-size: 17px; font-weight: 600; }
+.spaced { margin-top: 10px; }
+
+/* ---------------------------------------------------------------- HUD */
+
+/* HUD and screens track the play column so they line up with the world */
+#hud { position: fixed; top: 0; bottom: 0; left: var(--game-left);
+       width: var(--game-w); pointer-events: none; }
+
+#hud .scrim {
+  position: absolute; left: 0; right: 0; top: 0; height: 300px;
+  background: linear-gradient(to bottom,
+    rgba(20,19,15,.78) 0%, rgba(20,19,15,.36) 46%, rgba(20,19,15,0) 100%);
+}
+
+.hud-top {
+  position: absolute; top: var(--top); left: var(--pad); right: var(--pad);
+  display: flex; align-items: center; gap: 8px;
+}
+
+.hud-time {
+  position: absolute; top: calc(var(--top) + 54px); left: 0; right: 0;
+  text-align: center;
+  font-size: clamp(40px, calc(var(--game-w) * 0.15), 76px);
+  font-weight: 700; letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 4px 0 rgba(0,0,0,.55);
+}
+.hud-time.past-goal { color: var(--clay); }
+
+.pill {
+  position: absolute; top: calc(var(--top) + 148px); left: 50%;
+  transform: translateX(-50%);
+  width: min(330px, calc(100% - var(--pad) * 2));
+  background: rgba(20,19,15,.62);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 10px 16px 12px;
+  backdrop-filter: blur(3px);
+}
+.pill-label { text-align: center; color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+
+.bar { height: 9px; border-radius: 99px; background: rgba(0,0,0,.5); overflow: hidden; }
+.bar + .bar { margin-top: 6px; }
+.bar-thin { height: 5px; }
+.bar > i { display: block; height: 100%; width: 0; border-radius: 99px; background: var(--clay); }
+.bar > i.danger { background: var(--danger); }
+
+.toast {
+  position: absolute; top: calc(var(--top) + 250px); left: 0; right: 0;
+  text-align: center; font-size: 26px; font-weight: 700; color: var(--clay-hot);
+  opacity: 0; transition: opacity .45s ease;
+  text-shadow: 0 3px 0 rgba(0,0,0,.5);
+}
+.toast.show { opacity: 1; transition: opacity .12s ease; }
+
+/* ---------------------------------------------------------------- chips + buttons */
+
+.chip {
+  display: inline-block; padding: 6px 14px; border-radius: 99px;
+  background: var(--ink-2); border: 1px solid var(--line);
+  color: var(--muted); font-size: 13px; font-weight: 600; white-space: nowrap;
+}
+.chip-clay { color: var(--clay); }
+.chip-gold { color: var(--gold); border-color: rgba(227,179,65,.45); }
+
+.btn {
+  display: block; width: 100%; padding: 17px 20px;
+  border: 1px solid transparent; border-radius: var(--radius);
+  font: inherit; font-size: 19px; font-weight: 700; letter-spacing: .02em;
+  cursor: pointer; pointer-events: auto;
+  transition: background .12s ease, transform .06s ease;
+}
+.btn:active { transform: translateY(2px); }
+.btn-big { font-size: 25px; padding: 21px 20px; }
+
+.btn-primary { background: var(--clay); border-color: var(--clay-hot); color: #2a140c;
+               box-shadow: 0 5px 14px rgba(0,0,0,.45); }
+.btn-primary:active { background: var(--clay-hot); }
+
+.btn-ghost { background: var(--ink-2); border-color: var(--line); color: var(--cream); }
+.btn-ghost:active { background: var(--ink-3); }
+
+.btn-quiet { background: none; color: var(--muted); font-size: 15px; padding: 12px; }
+
+.btn-icon {
+  width: 46px; height: 42px; flex: 0 0 auto;
+  background: var(--ink-2); border: 1px solid var(--line); border-radius: 13px;
+  color: var(--cream); font: inherit; font-size: 17px; line-height: 1;
+  cursor: pointer; pointer-events: auto;
+}
+.btn-icon:active { background: var(--ink-3); }
+
+.row { display: flex; gap: 10px; }
+.row .btn { flex: 1 1 0; }
+
+/* ---------------------------------------------------------------- screens */
+
+.screen {
+  position: fixed; top: 0; bottom: 0; left: var(--game-left); width: var(--game-w);
+  background: rgba(20,19,15,.62);
+  animation: fade .16s ease;
+}
+#screen-levels, #screen-board { background: rgba(20,19,15,.88); }
+#screen-pause, #screen-over  { background: rgba(20,19,15,.80); }
+@keyframes fade { from { opacity: 0 } to { opacity: 1 } }
+
+.page {
+  position: absolute; inset: 0;
+  padding: calc(var(--top) + 12px) var(--pad) calc(var(--bottom) + 14px);
+  display: flex; flex-direction: column; gap: 12px;
+}
+/* keep the grass and the duck clear of the buttons on the title screen */
+.page-title { padding-bottom: calc(var(--bottom) + var(--game-w) * 0.52);
+              text-align: center; }
+.page-center { justify-content: center; }
+
+.wordmark {
+  margin-top: 6vh;
+  font-size: clamp(44px, calc(var(--game-w) * 0.17), 86px); font-weight: 800; line-height: .98;
+  letter-spacing: -.02em; text-shadow: 0 5px 0 rgba(0,0,0,.5);
+}
+.wordmark span { display: block; color: var(--clay); }
+.tagline { color: var(--muted); font-size: 15px; margin: 12px 0 16px; }
+
+.head { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
+.head h2 { font-size: 24px; font-weight: 700; letter-spacing: .02em; }
+.big { font-size: clamp(36px, calc(var(--game-w) * 0.13), 60px); font-weight: 800; text-align: center; margin-bottom: 14px; }
+
+.scroll { flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch;
+          touch-action: pan-y; overscroll-behavior: contain; pointer-events: auto; }
+
+/* ---------------------------------------------------------------- levels */
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding-bottom: 8px; }
+
+.card-lvl {
+  text-align: left; padding: 14px; min-height: 128px;
+  background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--radius);
+  color: var(--cream); font: inherit; cursor: pointer; pointer-events: auto;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.card-lvl:active { background: var(--ink-3); }
+.card-lvl[disabled] { opacity: .5; cursor: default; }
+.card-lvl .n { font-size: 26px; font-weight: 800; color: var(--clay); }
+.card-lvl[disabled] .n { color: var(--dim); }
+.card-lvl .top { display: flex; align-items: center; justify-content: space-between; }
+.card-lvl .star { color: var(--gold); font-size: 15px; }
+.card-lvl .nm { font-size: 15px; font-weight: 600; }
+.card-lvl .meta { font-size: 12px; color: var(--muted); margin-top: auto; }
+.card-lvl .best { font-size: 12px; color: var(--clay); }
+.card-lvl[disabled] .best { color: var(--dim); }
+
+/* ---------------------------------------------------------------- leaderboard */
+
+.name-row { display: flex; align-items: center; gap: 10px; }
+.name-row label { color: var(--muted); font-size: 14px; }
+#player-name {
+  flex: 1 1 auto; max-width: 190px; padding: 10px 14px;
+  background: var(--ink-2); border: 1px solid var(--line); border-radius: 13px;
+  color: var(--cream); font: inherit; font-size: 15px; font-weight: 700;
+  text-align: center; text-transform: uppercase; pointer-events: auto;
+}
+#player-name:focus { outline: none; border-color: var(--clay); background: var(--ink-3); }
+
+hr { border: none; border-top: 1px solid var(--line); }
+
+.bd-row {
+  display: flex; align-items: center; gap: 12px; padding: 11px 14px; margin-bottom: 8px;
+  background: var(--ink-2); border: 1px solid var(--line); border-radius: 15px;
+}
+.bd-row .rank { width: 26px; text-align: center; font-size: 19px; font-weight: 800; color: var(--muted); }
+.bd-row .who { flex: 1 1 auto; min-width: 0; }
+.bd-row .nm { font-size: 16px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bd-row .lv { font-size: 12px; color: var(--muted); }
+.bd-row .t  { font-size: 19px; font-weight: 700; color: var(--clay); font-variant-numeric: tabular-nums; }
+.bd-row.p1 { border-color: var(--gold);   background: var(--ink-3); } .bd-row.p1 .rank { color: var(--gold); }
+.bd-row.p2 { border-color: var(--silver); background: var(--ink-3); } .bd-row.p2 .rank { color: var(--silver); }
+.bd-row.p3 { border-color: var(--bronze); background: var(--ink-3); } .bd-row.p3 .rank { color: var(--bronze); }
+
+.empty { padding: 22px; text-align: center; color: var(--muted); font-size: 15px; line-height: 1.5;
+         background: var(--ink-2); border: 1px solid var(--line); border-radius: var(--radius); }
+
+/* ---------------------------------------------------------------- game over */
+
+.card {
+  background: var(--ink-2); border: 1px solid var(--line); border-radius: 22px;
+  padding: 22px 18px; text-align: center; margin-bottom: 16px;
+  box-shadow: 0 8px 22px rgba(0,0,0,.45);
+}
+.over-time { font-size: clamp(44px, calc(var(--game-w) * 0.16), 76px); font-weight: 800; line-height: 1.05;
+             font-variant-numeric: tabular-nums; }
+.card .chip { margin-bottom: 10px; }
+
+/* ---------------------------------------------------------------- loading */
+
+#loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+           background: var(--ink); color: var(--muted); font-size: 15px; letter-spacing: .08em; }
+
+/* the column is already phone-shaped, so nothing extra is needed on desktop */
