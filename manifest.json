@@ -1,0 +1,14 @@
+{
+  "name": "Duck Dash",
+  "short_name": "Duck Dash",
+  "description": "Dodge the anvils. Stay on the grass.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#14130f",
+  "theme_color": "#14130f",
+  "icons": [
+    { "src": "img/icon.png", "sizes": "128x128", "type": "image/png", "purpose": "any" }
+  ]
+}

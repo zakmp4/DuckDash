@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#14130f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Duck Dash">
+<link rel="apple-touch-icon" href="img/icon.png">
+<link rel="icon" href="img/icon.png">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="css/style.css">
+<title>Duck Dash</title>
+</head>
+<body>
+
+<canvas id="stage"></canvas>
+
+<!-- in-run HUD -->
+<div id="hud" class="hidden">
+  <div class="scrim"></div>
+  <div class="hud-top">
+    <span class="chip chip-clay" id="hud-level">LVL 1</span>
+    <span class="grow"></span>
+    <span class="chip" id="hud-dodges">0 dodged</span>
+    <button class="btn-icon" id="btn-pause" aria-label="Pause">&#10073;&#10073;</button>
+  </div>
+  <div class="hud-time" id="hud-time">0.00</div>
+  <div class="pill">
+    <div class="pill-label" id="hud-goal">survive 20s to clear</div>
+    <div class="bar"><i id="bar-goal"></i></div>
+    <div class="bar bar-thin"><i id="bar-next" class="danger"></i></div>
+  </div>
+  <div class="toast" id="toast"></div>
+</div>
+
+<!-- title -->
+<section class="screen" id="screen-title">
+  <div class="page page-title">
+    <h1 class="wordmark">DUCK<span>DASH</span></h1>
+    <p class="tagline">dodge the anvils. stay on the grass.</p>
+    <div class="center"><span class="chip chip-clay" id="title-best">no runs yet</span></div>
+    <div class="grow"></div>
+    <button class="btn btn-primary btn-big" id="btn-play">PLAY</button>
+    <div class="row">
+      <button class="btn btn-ghost" id="btn-levels">LEVELS</button>
+      <button class="btn btn-ghost" id="btn-board">LEADERBOARD</button>
+    </div>
+  </div>
+</section>
+
+<!-- levels -->
+<section class="screen hidden" id="screen-levels">
+  <div class="page">
+    <header class="head">
+      <button class="btn-icon" data-back aria-label="Back">&#8249;</button>
+      <h2>LEVELS</h2>
+    </header>
+    <div class="scroll"><div class="grid" id="level-grid"></div></div>
+  </div>
+</section>
+
+<!-- leaderboard -->
+<section class="screen hidden" id="screen-board">
+  <div class="page">
+    <header class="head">
+      <button class="btn-icon" data-back aria-label="Back">&#8249;</button>
+      <h2>LEADERBOARD</h2>
+    </header>
+    <div class="name-row">
+      <label for="player-name">playing as</label>
+      <input id="player-name" maxlength="10" spellcheck="false" autocomplete="off">
+    </div>
+    <hr>
+    <div class="scroll"><div id="board-list"></div></div>
+    <button class="btn btn-quiet" id="btn-clear-board">clear board</button>
+  </div>
+</section>
+
+<!-- pause -->
+<section class="screen hidden" id="screen-pause">
+  <div class="page page-center">
+    <h2 class="big">PAUSED</h2>
+    <button class="btn btn-primary" id="btn-resume">RESUME</button>
+    <button class="btn btn-ghost" id="btn-restart">RESTART</button>
+    <button class="btn btn-quiet" data-home>MAIN MENU</button>
+  </div>
+</section>
+
+<!-- game over -->
+<section class="screen hidden" id="screen-over">
+  <div class="page page-center">
+    <div class="card">
+      <span class="chip chip-gold hidden" id="over-badge"></span>
+      <div class="over-time" id="over-time">0.00</div>
+      <div class="muted">seconds survived</div>
+      <div class="muted spaced" id="over-note"></div>
+      <div class="gold" id="over-rank"></div>
+    </div>
+    <button class="btn btn-primary btn-big" id="btn-again">PLAY AGAIN</button>
+    <div class="row">
+      <button class="btn btn-ghost" id="btn-over-levels">LEVELS</button>
+      <button class="btn btn-ghost" id="btn-over-board">BOARD</button>
+    </div>
+    <button class="btn btn-quiet" data-home>MAIN MENU</button>
+  </div>
+</section>
+
+<div id="loading">loading&#8230;</div>
+
+<script src="js/config.js"></script>
+<script src="js/save.js"></script>
+<script src="js/game.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
